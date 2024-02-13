@@ -8,5 +8,7 @@ This is a simple chat application created with laraevl 10, beyond websockets and
 
 simply clone or download the zip file of this repository. Now open the terminal in this folder and run these commnds.
 
+```
 composer install
+```
 
