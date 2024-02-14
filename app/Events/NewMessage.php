@@ -17,11 +17,11 @@ class NewMessage implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public $newMessage;
 
-    public function __construct($newMessage)
+    public $newChat;
+    public function __construct($newChat)
     {
-        $this->newMessage = $newMessage;
+        $this->newChat = $newChat;
     }
 
     /**

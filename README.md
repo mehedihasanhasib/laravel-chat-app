@@ -1,6 +1,15 @@
+> [!CAUTION]
+>
+> this project is still under development
+
+
+
 ## Features
 
-This is a simple chat application created with laraevl 10, beyond websockets and pusher. In this app users can send chat request to another user and if the second user accepts the request they can chat with others in real time, send pictures and make video calls.
+This is a simple chat application created with laraevl 10, beyond websockets and pusher. In this app users can:
+
+- send chat request to another user
+- 
 
 
 
@@ -11,4 +20,14 @@ simply clone or download the zip file of this repository. Now open the terminal 
 ```
 composer install
 ```
+
+```
+cp .env-example .env
+```
+
+```
+php artisan key:generate
+```
+
+
 

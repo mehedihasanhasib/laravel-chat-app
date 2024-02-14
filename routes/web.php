@@ -13,12 +13,9 @@ use App\Http\Controllers\NewMessageController;
 |
 */
 
-Route::get(
-    '/',
-    [NewMessageController::class, 'index']
-);
 
 
-Route::get('/message', function () {
-    return view('welcome');
+
+Route::get('/', function () {
+    return view('message');
 });
