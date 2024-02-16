@@ -10,18 +10,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewMessage implements ShouldBroadcast
+class TestPresenceChannel implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-
-    public $newChat;
-    public function __construct($newChat)
+    public $message;
+    public function __construct($message)
     {
-        $this->newChat = $newChat;
+        $this->message = $message;
     }
 
     /**
@@ -32,7 +31,7 @@ class NewMessage implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('newMessage'),
+            new PresenceChannel('presence-channel'),
         ];
     }
 }

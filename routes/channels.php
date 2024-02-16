@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('newMessage', function ($user) {
-    return !is_null($user);
+Broadcast::channel('presence-channel', function ($user) {
+    return $user;
 });

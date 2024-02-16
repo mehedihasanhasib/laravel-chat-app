@@ -18,9 +18,10 @@
 @vite('resources/js/app.js')
 <script>
     setTimeout(() => {
-        window.Echo.private('newMessage').listen('.App\\Events\\NewMessage', (e) => {
-            console.log(e.newChat);
-        })
+        window.Echo.channel('newMessage')
+            .listen('.App\\Events\\NewMessage', (e) => {
+                console.log(e);
+            })
     }, 200);
 </script>
 

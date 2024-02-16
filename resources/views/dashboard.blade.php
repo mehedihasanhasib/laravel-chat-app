@@ -15,3 +15,18 @@
         </div>
     </div>
 </x-app-layout>
+@vite('resources/js/app.js')
+<script>
+    setTimeout(() => {
+        window.Echo.join('presence-channel')
+            .joining((user) => {
+                console.log(user.name + " is online");
+            })
+            .leaving((user) => {
+                console.log(user.name + " is offline");
+            })
+            .listen('.App\\Events\\TestPresenceChannel', (e) => {
+                console.log(e);
+            })
+    }, 200);
+</script>
