@@ -11,6 +11,6 @@ class EventFireController extends Controller
     public function fire_event(Request $request)
     {
         $user_name = Auth::user()->name;
-        event(new TestPresenceChannel('hello world', $user_name));
+        event(new TestPresenceChannel($request->message, $user_name));
     }
 }
