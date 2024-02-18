@@ -13,6 +13,21 @@
         <input type="text" name="" id="">
         <button>Send</button>
     </form>
+    <br>
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button>Logout</button>
+    </form>
 </body>
+
+@vite('resources/js/app.js')
+<script>
+    setTimeout(() => {
+        window.Echo.join('presence-channel')
+            .listen('.App\\Events\\TestPresenceChannel', (e) => {
+                console.log(e);
+            })
+    }, 100);
+</script>
 
 </html>
