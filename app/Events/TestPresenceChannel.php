@@ -18,9 +18,11 @@ class TestPresenceChannel implements ShouldBroadcast
      * Create a new event instance.
      */
     public $message;
-    public function __construct($message)
+    public $user;
+    public function __construct($message, $user)
     {
         $this->message = $message;
+        $this->user = $user;
     }
 
     /**
