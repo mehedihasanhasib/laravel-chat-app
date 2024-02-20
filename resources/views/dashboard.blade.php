@@ -1,22 +1,20 @@
 <x-app-layout>
     <div class="container">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto"></ul>
-
-                <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater" height="45"
-                    width="45" class="rounded-circle mx-3">
-                {{-- <a class="navbar-brand mx-2" href="#">{{ Auth::user()->name }}</a> --}}
-                <form action="{{ route('logout') }}" method="POST" class="form-inline my-2 my-lg-0">
-                    @csrf
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-                </form>
-            </div>
-        </nav>
-
         <div class="row clearfix">
+            <nav class="navbar navbar-expand-lg">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto"></ul>
+
+                    <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater"
+                        height="45" width="45" class="rounded-circle mx-3">
+                    <a class="navbar-brand mx-2" href="#">{{ Auth::user()->name }}</a>
+                    <form action="{{ route('logout') }}" method="POST" class="form-inline my-2 my-lg-0">
+                        @csrf
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                    </form>
+                </div>
+            </nav>
             <div class="col-lg-12">
                 <div class="card chat-app">
                     <div id="plist" class="people-list">
@@ -33,7 +31,10 @@
                                         height="47" width="47">
                                     <div class="about">
                                         <div class="name">{{ $user->name }}</div>
-                                        <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
+                                        <div class="status" id="status">
+                                            <i id="{{ $user->id }}" class="fa fa-circle offline"></i>
+
+                                        </div>
                                     </div>
                                 </li>
                             @endforeach
@@ -107,6 +108,7 @@
 
 @vite('resources/js/app.js')
 <script>
+    /*
     $(document).ready(function() {
         $('#sendMessage').submit('click', function(e) {
             e.preventDefault()
@@ -117,13 +119,30 @@
             })
         })
     })
+    */
 
     setTimeout(() => {
-        window.Echo.join('presence-channel')
-            .listen('.App\\Events\\TestPresenceChannel', (e) => {
+        window.Echo.join('status_update_channel')
+            .here((users) => {
+                for (let i = 0; i < users.length; i++) {
+                    if (users[i].id != sender_id) {
+                        $('#' + users[i].id).removeClass('offline');
+                        $('#' + users[i].id).addClass('online');
+                    }
+                }
+            })
+            .joining((users) => {
+                $('#' + users.id).removeClass('offline');
+                $('#' + users.id).addClass('online');
+            })
+            .leaving((users) => {
+                $('#' + users.id).removeClass('online');
+                $('#' + users.id).addClass('offline');
+            })
+            .listen('.App\\Events\\UserStatusEvemt', (e) => {
                 console.log(
                     e.user + ": " + e.message
                 );
             })
-    }, 200);
+    }, 500);
 </script>

@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('presence-channel', function ($user) {
+Broadcast::channel('status_update_channel', function ($user) {
     return $user;
 });

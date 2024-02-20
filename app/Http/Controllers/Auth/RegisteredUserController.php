@@ -43,6 +43,8 @@ class RegisteredUserController extends Controller
             $file_name = time() . $request->file('profile_picture')->getClientOriginalName();
             $path =  public_path() . '/profile_picture';
             $request->file('profile_picture')->move($path,  $file_name);
+
+            $data['profile_picture'] = $file_name;
         }
 
         $user = User::create($data);

@@ -17,6 +17,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('dashboard.css') }}">
     <!-- Scripts -->
+
+    <script>
+        const sender_id = @json(Auth::user()->id);
+    </script>
+
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 </head>
 
