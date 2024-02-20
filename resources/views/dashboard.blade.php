@@ -108,19 +108,6 @@
 
 @vite('resources/js/app.js')
 <script>
-    /*
-    $(document).ready(function() {
-        $('#sendMessage').submit('click', function(e) {
-            e.preventDefault()
-            data = $('#message');
-            $.ajax({
-                url: "{{ route('event_fire') }}",
-                data: data
-            })
-        })
-    })
-    */
-
     setTimeout(() => {
         window.Echo.join('status_update_channel')
             .here((users) => {
