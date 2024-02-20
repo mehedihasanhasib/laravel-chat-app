@@ -1,23 +1,36 @@
 <x-app-layout>
+
     <div class="container">
 
         <div class="row clearfix">
-            <nav class="navbar navbar-expand-lg">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto"></ul>
-
-                    <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater"
-                        height="45" width="45" class="rounded-circle mx-3">
-                    <a class="navbar-brand mx-2" href="#">{{ Auth::user()->name }}</a>
-                    <form action="{{ route('logout') }}" method="POST" class="form-inline my-2 my-lg-0">
-                        @csrf
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-                    </form>
-                </div>
-            </nav>
             <div class="col-lg-12">
                 <div class="card chat-app">
+
                     <div id="plist" class="people-list">
+
+
+
+                        <div class="mb-2">
+
+                            <div class="d-flex nav-item dropdown">
+                                <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater"
+                                    height="45" width="45" id="navbarDropdown" class="rounded-circle d-inline">
+
+                                <p class="navbar-brand mx-2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">{{ Auth::user()->name }}</p>
+
+                                <form action="{{ route('logout') }}" method="POST"
+                                    class="form-inline my-2 my-lg-0 dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">Logout</button>
+                                </form>
+
+
+                            </div>
+
+
+                        </div>
+
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-search"></i></span>
