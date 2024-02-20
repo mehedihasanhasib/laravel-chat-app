@@ -1,5 +1,21 @@
 <x-app-layout>
     <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"></ul>
+
+                <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater" height="45"
+                    width="45" class="rounded-circle mx-3">
+                {{-- <a class="navbar-brand mx-2" href="#">{{ Auth::user()->name }}</a> --}}
+                <form action="{{ route('logout') }}" method="POST" class="form-inline my-2 my-lg-0">
+                    @csrf
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                </form>
+            </div>
+        </nav>
+
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card chat-app">
@@ -11,49 +27,16 @@
                             <input type="text" class="form-control" placeholder="Search...">
                         </div>
                         <ul class="list-unstyled chat-list mt-2 mb-0">
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Vincent Porter</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
-                                </div>
-                            </li>
-                            <li class="clearfix active">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Aiden Chavez</div>
-                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Mike Thomas</div>
-                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Christian Kelly</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Monica Ward</div>
-                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Dean Henry</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28
+                            @foreach ($users as $user)
+                                <li class="clearfix">
+                                    <img src="{{ asset('profile_picture/' . $user->profile_picture) }}" alt="avatar"
+                                        height="47" width="47">
+                                    <div class="about">
+                                        <div class="name">{{ $user->name }}</div>
+                                        <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="chat">
@@ -100,17 +83,19 @@
                                     <div class="message-data">
                                         <span class="message-data-time">10:15 AM, Today</span>
                                     </div>
-                                    <div class="message my-message">Project has been already finished and I have results
+                                    <div class="message my-message">Project has been already finished and I have
+                                        results
                                         to show you.</div>
                                 </li>
                             </ul>
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
+
+                                <input type="text" class="form-control" placeholder="Enter text here...">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fa fa-send"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter text here...">
                             </div>
                         </div>
                     </div>
