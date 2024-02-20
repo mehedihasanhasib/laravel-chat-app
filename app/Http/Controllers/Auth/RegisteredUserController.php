@@ -28,18 +28,26 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'profile_picture' => ['required', 'image'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // store to profile picture in public folder
+        $file_name = time() . $request->file('profile_picture')->getClientOriginalName();
+        $path =  public_path() . '/profile_picture';
+        $request->file('profile_picture')->move($path,  $file_name);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'profile_picture' => $file_name,
             'password' => Hash::make($request->password),
+
         ]);
 
         event(new Registered($user));
