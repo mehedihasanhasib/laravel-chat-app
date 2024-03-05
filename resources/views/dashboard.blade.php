@@ -8,13 +8,11 @@
 
                     <div id="plist" class="people-list">
 
-
-
                         <div class="mb-2">
 
                             <div class="d-flex nav-item dropdown">
                                 <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater"
-                                    height="45" width="45" id="navbarDropdown" class="rounded-circle d-inline">
+                                    height="41" width="47" id="navbarDropdown" class="rounded-circle d-inline">
 
                                 <p class="navbar-brand mx-2" role="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">{{ Auth::user()->name }}</p>
@@ -46,7 +44,6 @@
                                         <div class="name">{{ $user->name }}</div>
                                         <div class="status" id="status">
                                             <i id="{{ $user->id }}" class="fa fa-circle offline"></i>
-
                                         </div>
                                     </div>
                                 </li>
