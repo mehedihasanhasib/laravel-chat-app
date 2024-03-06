@@ -11,7 +11,6 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
@@ -19,7 +18,8 @@
     <!-- Scripts -->
 
     <script>
-        const sender_id = @json(Auth::user()->id);
+        let sender_id = @json(Auth::user()->id);
+        let receiver_id;
     </script>
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}

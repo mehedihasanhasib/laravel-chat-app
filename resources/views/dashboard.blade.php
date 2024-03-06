@@ -1,15 +1,11 @@
 <x-app-layout>
 
     <div class="container">
-
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card chat-app">
-
                     <div id="plist" class="people-list">
-
                         <div class="mb-2">
-
                             <div class="d-flex nav-item dropdown">
                                 <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater"
                                     height="41" width="47" id="navbarDropdown" class="rounded-circle d-inline">
@@ -22,13 +18,8 @@
                                     @csrf
                                     <button class="dropdown-item" type="submit">Logout</button>
                                 </form>
-
-
                             </div>
-
-
                         </div>
-
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-search"></i></span>
@@ -37,7 +28,7 @@
                         </div>
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             @foreach ($users as $user)
-                                <li class="clearfix">
+                                <li class="clearfix user-list">
                                     <img src="{{ asset('profile_picture/' . $user->profile_picture) }}" alt="avatar"
                                         height="47" width="47">
                                     <div class="about">
@@ -50,7 +41,8 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div class="chat">
+
+                    {{-- <div class="chat">
                         <div class="chat-header clearfix">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -109,7 +101,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+
                 </div>
             </div>
         </div>
@@ -142,4 +135,10 @@
                 );
             })
     }, 500);
+
+    $(document).ready(function() {
+        $('.user-list').click(function() {
+            console.log('hello');
+        });
+    });
 </script>
