@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventFireController;
+use App\Http\Controllers\GetReceiverInfoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('get-receiver-info/{id}', [GetReceiverInfoController::class, 'getUserInfo']);
 
 Route::get('/event', [EventFireController::class, 'fire_event'])
     ->name('event_fire');

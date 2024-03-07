@@ -42,9 +42,13 @@
                         </ul>
                     </div>
 
-                    {{-- <div class="chat">
+                    <div class="chat">
+
+                        {{-- with whom chatting --}}
                         <div class="chat-header clearfix">
                             <div class="row">
+
+                                {{-- profile picture of the receiver --}}
                                 <div class="col-lg-6">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
                                         <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
@@ -54,6 +58,7 @@
                                         <small>Last seen: 2 hours ago</small>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6 hidden-sm text-right">
                                     <a href="javascript:void(0);" class="btn btn-outline-secondary"><i
                                             class="fa fa-camera"></i></a>
@@ -66,6 +71,11 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- with whom chatting ends --}}
+
+                        {{-- ----------------------------------------------------------------------- --}}
+
+                        {{-- show messages --}}
                         <div class="chat-history">
                             <ul class="m-b-0">
                                 <li class="clearfix">
@@ -92,16 +102,20 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="chat-message clearfix">
-                            <div class="input-group mb-0">
+                        {{-- show messages ends --}}
 
+                        <form class="chat-message clearfix" action="" method="POST">
+                            @csrf
+                            <div class="input-group mb-0">
                                 <input type="text" class="form-control" placeholder="Enter text here...">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-send"></i></span>
+                                    <button type="submit" class="m-0 p-0">
+                                        <span class="input-group-text"><i class="fa fa-send"></i></span>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div> --}}
+                        </form>
+                    </div>
 
                 </div>
             </div>
@@ -137,10 +151,19 @@
     }, 500);
 
     $(document).ready(function() {
+
         $('.user-list').click(function() {
+
             receiver_id = $(this).attr('id');
-            console.log(sender_id);
-            console.log(receiver_id);
+            $.ajax({
+                url: "{{ url('get-receiver-info', ['id' => 2]) }}",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+
         });
+
     });
 </script>
