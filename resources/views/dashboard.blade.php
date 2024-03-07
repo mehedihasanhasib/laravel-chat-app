@@ -51,11 +51,11 @@
                                 {{-- profile picture of the receiver --}}
                                 <div class="col-lg-6">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                                        <img id="receiver_image" src="" alt="avatar">
                                     </a>
                                     <div class="chat-about">
-                                        <h6 class="m-b-0">Aiden Chavez</h6>
-                                        <small>Last seen: 2 hours ago</small>
+                                        <h6 id="receiver_name" class="m-b-0"></h6>
+                                        {{-- <small>Last seen: 2 hours ago</small> --}}
                                     </div>
                                 </div>
 
@@ -81,7 +81,7 @@
                                 <li class="clearfix">
                                     <div class="message-data text-right">
                                         <span class="message-data-time">10:10 AM, Today</span>
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                                        <img src="" alt="avatar">
                                     </div>
                                     <div class="message other-message float-right"> Hi Aiden, how are you? How is the
                                         project coming along? </div>
@@ -151,19 +151,18 @@
     }, 500);
 
     $(document).ready(function() {
-
         $('.user-list').click(function() {
-
             receiver_id = $(this).attr('id');
             $.ajax({
-                url: "{{ url('get-receiver-info', ['id' => 2]) }}",
+                url: `{{ url('get-receiver-info') }}/${receiver_id}`,
                 dataType: 'json',
                 success: function(data) {
                     console.log(data);
+                    $('#receiver_name').text(data.name);
+                    $('#receiver_image').attr('src',
+                        `{{ asset('profile_picture/${data.profile_picture}') }}`);
                 }
             });
-
         });
-
     });
 </script>
