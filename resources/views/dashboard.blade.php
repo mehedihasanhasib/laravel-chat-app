@@ -1,9 +1,8 @@
 <x-app-layout>
-
     <div class="container">
         <div class="row clearfix">
             <div class="col-lg-12">
-                <div class="card chat-app">
+                <div class="card chat-app" style="height: 560px; overflow-x: auto;">
                     <div id="plist" class="people-list">
                         <div class="mb-2">
                             <div class="d-flex nav-item dropdown">
@@ -51,7 +50,7 @@
                                 {{-- profile picture of the receiver --}}
                                 <div class="col-lg-6">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img id="receiver_image" src="" alt="avatar">
+                                        <img id="receiver_image" src="" alt="">
                                     </a>
                                     <div class="chat-about">
                                         <h6 id="receiver_name" class="m-b-0"></h6>
@@ -76,38 +75,42 @@
                         {{-- ----------------------------------------------------------------------- --}}
 
                         {{-- show messages --}}
-                        <div class="chat-history">
-                            <ul class="m-b-0">
-                                <li class="clearfix">
-                                    <div class="message-data text-right">
-                                        <span class="message-data-time">10:10 AM, Today</span>
-                                        <img src="" alt="avatar">
-                                    </div>
-                                    <div class="message other-message float-right"> Hi Aiden, how are you? How is the
-                                        project coming along? </div>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">10:12 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">Are we meeting today?</div>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">10:15 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">Project has been already finished and I have
-                                        results
-                                        to show you.</div>
-                                </li>
+                        <div class="chat-history" style="height: 410px; overflow-x: auto;">
+                            <ul class="m-b-0" id="chats">
+                                {{-- <div>
+                                    <li class="clearfix">
+                                        <div class="message-data text-right">
+                                            <span class="message-data-time">10:10 AM, Today</span>
+                                            <img src="" alt="avatar">
+                                        </div>
+                                        <div class="message other-message float-right"> Hi Aiden, how are you? How is
+                                            the
+                                            project coming along? </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="message-data">
+                                            <span class="message-data-time">10:12 AM, Today</span>
+                                        </div>
+                                        <div class="message my-message">Are we meeting today?</div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="message-data">
+                                            <span class="message-data-time">10:15 AM, Today</span>
+                                        </div>
+                                        <div class="message my-message">Project has been already finished and I have
+                                            results
+                                            to show you.</div>
+                                    </li>
+                                </div> --}}
                             </ul>
                         </div>
                         {{-- show messages ends --}}
 
-                        <form class="chat-message clearfix" action="" method="POST">
+                        <form id="send_message" class="chat-message clearfix" action="" method="POST">
                             @csrf
                             <div class="input-group mb-0">
-                                <input type="text" class="form-control" placeholder="Enter text here...">
+                                <input id="message" type="text" class="form-control"
+                                    placeholder="Enter text here...">
                                 <div class="input-group-prepend">
                                     <button type="submit" class="m-0 p-0">
                                         <span class="input-group-text"><i class="fa fa-send"></i></span>
@@ -125,6 +128,12 @@
 
 @vite('resources/js/app.js')
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#send_message').hide();
     setTimeout(() => {
         window.Echo.join('status_update_channel')
             .here((users) => {
@@ -153,16 +162,43 @@
     $(document).ready(function() {
         $('.user-list').click(function() {
             receiver_id = $(this).attr('id');
+            $('#send_message').show();
+
             $.ajax({
                 url: `{{ url('get-receiver-info') }}/${receiver_id}`,
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data);
                     $('#receiver_name').text(data.name);
                     $('#receiver_image').attr('src',
                         `{{ asset('profile_picture/${data.profile_picture}') }}`);
                 }
             });
+        });
+    });
+
+    // send message
+    $('#send_message').submit(function(e) {
+        e.preventDefault();
+        let message = $('#message').val();
+        $.ajax({
+            url: `{{ url('send-message') }}`,
+            type: "POST",
+            dataType: "json",
+            data: {
+                sender_id: sender_id,
+                receiver_id: receiver_id,
+                message: message
+            },
+            success: function(res) {
+                console.log(res);
+                // let sender_html = `
+                //                 <li class="clearfix">
+                //                     <div class="message other-message float-right">${res.message}</div>
+                //                 </li>
+                // `;
+
+                // $('#chats').append(sender_html);
+            }
         });
     });
 </script>

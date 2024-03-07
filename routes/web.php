@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventFireController;
 use App\Http\Controllers\GetReceiverInfoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SendMessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,8 @@ Route::get('get-receiver-info/{id}', [GetReceiverInfoController::class, 'getUser
 
 Route::get('/event', [EventFireController::class, 'fire_event'])
     ->name('event_fire');
+
+Route::post('send-message', [SendMessageController::class, 'send_message']);
 
 Route::get('/dashboard', [DashboardController::class, 'load_dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
