@@ -28,7 +28,7 @@
                         </div>
                         <ul class="list-unstyled chat-list mt-2 mb-0">
                             @foreach ($users as $user)
-                                <li class="clearfix user-list">
+                                <li id="{{ $user->id }}" class="clearfix user-list">
                                     <img src="{{ asset('profile_picture/' . $user->profile_picture) }}" alt="avatar"
                                         height="47" width="47">
                                     <div class="about">
@@ -138,7 +138,9 @@
 
     $(document).ready(function() {
         $('.user-list').click(function() {
-            console.log('hello');
+            receiver_id = $(this).attr('id');
+            console.log(sender_id);
+            console.log(receiver_id);
         });
     });
 </script>
