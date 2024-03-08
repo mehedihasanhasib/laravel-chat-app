@@ -15,9 +15,7 @@ class SendMessageController extends Controller
             'receiver_id' => $request->receiver_id,
             'messages' => $request->message,
         ]);
-
         event(new MessageBroadcastEvent($chats));
-
         return response()->json($chats);
     }
 }

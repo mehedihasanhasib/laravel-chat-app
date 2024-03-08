@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card chat-app" style="height: 560px; overflow-x: auto;">
                     <div id="plist" class="people-list">
-                        <div class="mb-2">
+                        {{-- <div class="mb-2">
                             <div class="d-flex nav-item dropdown">
                                 <img src="{{ asset('profile_picture/' . Auth::user()->profile_picture) }}" alt="avater"
                                     height="41" width="47" id="navbarDropdown" class="rounded-circle d-inline">
@@ -18,7 +18,7 @@
                                     <button class="dropdown-item" type="submit">Logout</button>
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-search"></i></span>
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6 hidden-sm text-right">
+                                <div class="col-lg-6 hidden-sm text-right">
                                     <a href="javascript:void(0);" class="btn btn-outline-secondary"><i
                                             class="fa fa-camera"></i></a>
                                     <a href="javascript:void(0);" class="btn btn-outline-primary"><i
@@ -69,7 +69,7 @@
                                             class="fa fa-cogs"></i></a>
                                     <a href="javascript:void(0);" class="btn btn-outline-warning"><i
                                             class="fa fa-question"></i></a>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         {{-- with whom chatting ends --}}
@@ -77,7 +77,7 @@
                         {{-- ----------------------------------------------------------------------- --}}
 
                         {{-- show messages --}}
-                        <div class="chat-history" style="height: 411px; overflow-x: auto;">
+                        <div class="chat-history" style="height: 400px; overflow-x: auto;">
                             <ul class="m-b-0" id="chats">
                                 {{-- <div>
                                     <li class="clearfix">
@@ -166,7 +166,6 @@
         $('.user-list').click(function() {
             receiver_id = $(this).attr('id');
             $('#send_message').show();
-
             $.ajax({
                 url: `{{ url('get-receiver-info') }}/${receiver_id}`,
                 dataType: 'json',
@@ -202,6 +201,8 @@
                 $('#chats').append(sender_html);
             }
         });
+
+        $('#message').val('');
     });
 
 

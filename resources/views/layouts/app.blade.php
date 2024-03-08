@@ -22,11 +22,12 @@
         let receiver_id;
     </script>
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans ">
     <div class="min-h-screen bg-gray-100">
+        @include('layouts.navigation')
         <!-- Page Content -->
         <main>
             {{ $slot }}
