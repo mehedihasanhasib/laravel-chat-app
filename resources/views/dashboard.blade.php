@@ -49,16 +49,18 @@
 
                                 {{-- profile picture of the receiver --}}
                                 <div class="col-lg-6">
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img id="receiver_image" src="" alt="">
-                                    </a>
-                                    <div class="chat-about">
-                                        <h6 id="receiver_name" class="m-b-0"></h6>
-                                        {{-- <small>Last seen: 2 hours ago</small> --}}
+                                    <div class="d-flex align-items-center">
+                                        <div href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                            <img id="receiver_image" src="" alt="">
+                                        </div>
+                                        <div class="chat-about">
+                                            <h6 id="receiver_name" class="m-b-0"></h6>
+                                            {{-- <small>Last seen: 2 hours ago</small> --}}
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6 hidden-sm text-right">
+                                {{-- <div class="col-lg-6 hidden-sm text-right">
                                     <a href="javascript:void(0);" class="btn btn-outline-secondary"><i
                                             class="fa fa-camera"></i></a>
                                     <a href="javascript:void(0);" class="btn btn-outline-primary"><i
@@ -67,7 +69,7 @@
                                             class="fa fa-cogs"></i></a>
                                     <a href="javascript:void(0);" class="btn btn-outline-warning"><i
                                             class="fa fa-question"></i></a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         {{-- with whom chatting ends --}}
@@ -75,7 +77,7 @@
                         {{-- ----------------------------------------------------------------------- --}}
 
                         {{-- show messages --}}
-                        <div class="chat-history" style="height: 410px; overflow-x: auto;">
+                        <div class="chat-history" style="height: 411px; overflow-x: auto;">
                             <ul class="m-b-0" id="chats">
                                 {{-- <div>
                                     <li class="clearfix">
@@ -106,11 +108,12 @@
                         </div>
                         {{-- show messages ends --}}
 
-                        <form id="send_message" class="chat-message clearfix" action="" method="POST">
+                        <form autocomplete="off" id="send_message" class="chat-message clearfix" action=""
+                            method="POST">
                             @csrf
                             <div class="input-group mb-0">
                                 <input id="message" type="text" class="form-control"
-                                    placeholder="Enter text here...">
+                                    placeholder="Enter text here..." autocomplete="off">
                                 <div class="input-group-prepend">
                                     <button type="submit" class="m-0 p-0">
                                         <span class="input-group-text"><i class="fa fa-send"></i></span>
@@ -190,15 +193,30 @@
                 message: message
             },
             success: function(res) {
-                console.log(res);
-                // let sender_html = `
-                //                 <li class="clearfix">
-                //                     <div class="message other-message float-right">${res.message}</div>
-                //                 </li>
-                // `;
+                let sender_html = `
+                                <li class="clearfix">
+                                    <div class="message other-message float-right">${res.messages}</div>
+                                 </li>
+                `;
 
-                // $('#chats').append(sender_html);
+                $('#chats').append(sender_html);
             }
         });
     });
+
+
+    // broadcast messages
+    setTimeout(() => {
+        window.Echo.private('messages')
+            .listen('.newMessage', (res) => {
+
+                if (sender_id == res.chats.receiver_id && receiver_id == res.chats.sender_id) {
+                    let receiver_html = `<li class="clearfix">
+                                            <div class="message other-message float-left">${res.chats.messages}</div>
+                                        </li>`;
+                    $('#chats').append(receiver_html);
+                }
+
+            })
+    }, 500);
 </script>

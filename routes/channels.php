@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('status_update_channel', function ($user) {
     return $user;
 });
+
+Broadcast::channel('messages', function ($user) {
+    return $user;
+});
