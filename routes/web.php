@@ -28,6 +28,7 @@ Route::get('/event', [EventFireController::class, 'fire_event'])
     ->name('event_fire');
 
 Route::post('send-message', [SendMessageController::class, 'send_message']);
+Route::post('load-chats', [SendMessageController::class, 'load_chats']);
 
 Route::get('/dashboard', [DashboardController::class, 'load_dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 

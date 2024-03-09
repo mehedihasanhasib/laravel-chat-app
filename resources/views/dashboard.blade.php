@@ -137,6 +137,8 @@
         }
     });
     $('#send_message').hide();
+
+    // show users lists
     setTimeout(() => {
         window.Echo.join('status_update_channel')
             .here((users) => {
@@ -162,10 +164,42 @@
             })
     }, 500);
 
+    //load chats function
+
+    function loadChats() {
+        $.ajax({
+            url: "{{ url('load-chats') }}",
+            type: "post",
+            data: {
+                sender_id: sender_id,
+                receiver_id: receiver_id
+            },
+            success: function(res) {
+                res.forEach((v) => {
+                    if (v.sender_id == sender_id) {
+                        let sender_html = `
+                                <li class="clearfix">
+                                    <div class="message other-message float-right">${v.messages}</div>
+                                 </li>`;
+                        $('#chats').append(sender_html);
+                    } else {
+                        let receiver_html = `<li class="clearfix">
+                                            <div class="message other-message float-left">${v.messages}</div>
+                                        </li>`;
+                        $('#chats').append(receiver_html);
+                    }
+                });
+            }
+        });
+    }
+
+
+    // load chats by clicking users
     $(document).ready(function() {
         $('.user-list').click(function() {
             receiver_id = $(this).attr('id');
             $('#send_message').show();
+            $('#chats').html('');
             $.ajax({
                 url: `{{ url('get-receiver-info') }}/${receiver_id}`,
                 dataType: 'json',
@@ -175,6 +209,8 @@
                         `{{ asset('profile_picture/${data.profile_picture}') }}`);
                 }
             });
+
+            loadChats();
         });
     });
 
