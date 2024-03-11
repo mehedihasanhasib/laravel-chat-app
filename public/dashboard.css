@@ -212,7 +212,7 @@ body {
 }
 
 @media only screen and (max-width: 767px) {
-    .chat-app .people-list {
+    /* .chat-app .people-list {
         height: 465px;
         width: 100%;
         overflow-x: auto;
@@ -236,7 +236,7 @@ body {
     .chat-app .chat-history {
         height: 300px;
         overflow-x: auto
-    }
+    } */
 }
 
 @media only screen and (min-width: 768px) and (max-width: 992px) {

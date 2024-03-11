@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-lg-12">
-                <div class="card chat-app" style="height: 560px; overflow-x: auto;">
+                <div class="card chat-app" style="height: 525px; overflow-x: auto;">
                     <div id="plist" class="people-list">
                         {{-- <div class="mb-2">
                             <div class="d-flex nav-item dropdown">
@@ -77,7 +77,7 @@
                         {{-- ----------------------------------------------------------------------- --}}
 
                         {{-- show messages --}}
-                        <div class="chat-history" style="height: 400px; overflow-x: auto;">
+                        <div class="chat-history" style="height: 365px; overflow-x: auto;">
                             <ul class="m-b-0" id="chats">
                                 {{-- <div>
                                     <li class="clearfix">
