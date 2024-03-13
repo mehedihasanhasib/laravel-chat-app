@@ -76,7 +76,7 @@
 
                         {{-- ----------------------------------------------------------------------- --}}
 
-                        {{-- show messages --}}
+                        {{-- show chats --}}
                         <div class="chat-history" style="height: 365px; overflow-x: auto;">
                             <ul class="m-b-0" id="chats">
                                 {{-- <div>
@@ -106,7 +106,7 @@
                                 </div> --}}
                             </ul>
                         </div>
-                        {{-- show messages ends --}}
+                        {{-- show chats ends --}}
 
                         <form autocomplete="off" id="send_message" class="chat-message clearfix" action=""
                             method="POST">
@@ -157,15 +157,19 @@
                 $('#' + users.id).removeClass('online');
                 $('#' + users.id).addClass('offline');
             })
-            .listen('.App\\Events\\UserStatusEvemt', (e) => {
+            .listen('.App\\Events\\UserStatusEvent', (e) => {
                 console.log(
                     e.user + ": " + e.message
                 );
             })
     }, 500);
 
-    //load chats function
+    // scroll function
+    function scroll() {
+        $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+    }
 
+    //load chats function
     function loadChats() {
         $.ajax({
             url: "{{ url('load-chats') }}",
@@ -178,20 +182,24 @@
                 res.forEach((v) => {
                     if (v.sender_id == sender_id) {
                         let sender_html = `
-                                <li class="clearfix">
-                                    <div class="message other-message float-right">${v.messages}</div>
-                                 </li>`;
+                        <li class="clearfix">
+                            <div class="message other-message float-right">${v.messages}</div>
+                         </li>`;
                         $('#chats').append(sender_html);
+                        scroll()
                     } else {
                         let receiver_html = `<li class="clearfix">
-                                            <div class="message other-message float-left">${v.messages}</div>
-                                        </li>`;
+                                    <div class="message other-message float-left">${v.messages}</div>
+                                </li>`;
                         $('#chats').append(receiver_html);
+                        scroll()
                     }
                 });
             }
         });
     }
+
+
 
 
     // load chats by clicking users
@@ -209,10 +217,12 @@
                         `{{ asset('profile_picture/${data.profile_picture}') }}`);
                 }
             });
-
             loadChats();
         });
     });
+
+
+
 
     // send message
     $('#send_message').submit(function(e) {
@@ -235,9 +245,9 @@
                 `;
 
                 $('#chats').append(sender_html);
+                scroll()
             }
         });
-
         $('#message').val('');
     });
 
@@ -253,7 +263,7 @@
                                         </li>`;
                     $('#chats').append(receiver_html);
                 }
-
+                scroll();
             })
     }, 500);
 </script>
